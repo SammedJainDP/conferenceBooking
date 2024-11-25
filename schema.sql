@@ -1,0 +1,3 @@
+CREATE TABLE city(cityId INTEGER, cityName TEXT, capacity INTEGER);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE user (Id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT NOT NULL, lastName TEXT NOT NULL, email TEXT NOT NULL, tickets INTEGER NOT NULL, cityID INTEGER, FOREIGN KEY (cityID) REFERENCES city(cityID));
