@@ -15,7 +15,7 @@ func UpdateUserDetails(db *sql.DB, firstName string, lastName string, email stri
 	if err != nil {
 		log.Fatal("Query was not able be executed")
 	}
-	println("You are now now added to our Guest list")
+	println("You are now added to our Guest list")
 	//////////////////////////////////////////////////////////////////////
 	query = "SELECT cityName FROM city where cityId=?"
 	res, err := db.Query(query, cityId)
