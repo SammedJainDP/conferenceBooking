@@ -27,15 +27,15 @@ func main() {
 	var firstName string
 	var lastName string
 	var email string
-
+	var remainingTickets uint
+	var cityId int
 	var userTickets uint
 
 	var flag bool = true
 	fmt.Println("welcome to the Conference Ticket Boolking CLI Application")
 
 	for {
-		var remainingTickets uint
-		var cityId int
+
 		if flag {
 			remainingTickets, cityId = cities.GetCities(db)
 		}
@@ -57,12 +57,12 @@ func main() {
 		val := validation.ValidateUser(firstName, lastName, email, remainingTickets, userTickets)
 
 		if val {
-			fmt.Printf("thank you %v %v for booking the tickets. You will get the confirmation shorlty to %v\n", firstName, lastName, email)
+			fmt.Printf("thank you %v %v for booking the tickets. You will get the confirmation shortly to %v\n", firstName, lastName, email)
 
 			user.UpdateUserDetails(db, firstName, lastName, email, userTickets, cityId)
 
 			remainingTickets = remainingTickets - userTickets
-
+			fmt.Println("abcdabcd")
 			cities.UpdateRemainingTickets(db, remainingTickets, cityId)
 
 			flag = true
