@@ -7,15 +7,11 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"sync"
-	"time"
 
 	_ "modernc.org/sqlite"
 
 	_ "github.com/mattn/go-sqlite3"
 )
-
-var waitGroup = sync.WaitGroup{}
 
 func main() {
 	db, err := sql.Open("sqlite3", "conferenceDB")
@@ -23,7 +19,6 @@ func main() {
 		log.Fatal("Error connecting to database:", err)
 	}
 	defer db.Close()
-	// createTable(db)
 	var firstName string
 	var lastName string
 	var email string
@@ -62,30 +57,23 @@ func main() {
 			user.UpdateUserDetails(db, firstName, lastName, email, userTickets, cityId)
 
 			remainingTickets = remainingTickets - userTickets
-			fmt.Println("abcdabcd")
 			cities.UpdateRemainingTickets(db, remainingTickets, cityId)
 
 			flag = true
 
-			waitGroup.Add(1)
-			go sendTickets(firstName, email, userTickets)
+			sendTickets(firstName, email, userTickets)
 			continue
 
 		} else {
 			flag = false
 			continue
-
 		}
 	}
-	// waitGroup.Wait()
-
 }
 
 func sendTickets(firstName string, email string, userTickets uint) {
-	time.Sleep(10 * time.Second)
 	var ticket = fmt.Sprintf("Hi %v,\n you have booked %v tickets.\n", firstName, userTickets)
 	fmt.Println("###############")
 	fmt.Printf("%v The ticket confirmation has been sent to the Email: %v\n ", ticket, email)
 	fmt.Println("###############")
-	waitGroup.Done()
 }
