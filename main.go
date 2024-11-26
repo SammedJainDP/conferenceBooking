@@ -16,6 +16,7 @@ import (
 )
 
 func main() {
+
 	db, err := sql.Open("sqlite3", "conferenceDB")
 	if err != nil {
 		log.Fatal("Error connecting to database:", err)
@@ -31,7 +32,30 @@ func main() {
 	var flag bool = true
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("welcome to the Conference Ticket Boolking CLI Application")
+	for {
+		var options int
+		fmt.Println("welcome to the Conference Ticket Boolking CLI Application")
+		fmt.Println("Please enter the numbers for the below options.\n (1 -> to book the tickets.\n 2-> check the availability of the ticket.\n 3-> to exit)")
+		fmt.Println("1. Book")
+		fmt.Println("2. Check")
+		fmt.Println("3. Exit")
+		fmt.Print(">")
+		fmt.Scan(&options)
+
+		if options == 1 {
+			break
+		}
+		if options == 2 {
+			cities.GetTicketsLeftInEveryCity(db)
+			continue
+		}
+		if options == 3 {
+			fmt.Println("Thank you. See You again !")
+			os.Exit(0)
+
+		}
+
+	}
 
 	for {
 

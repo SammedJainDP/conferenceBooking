@@ -117,3 +117,30 @@ func GetCities(db *sql.DB) (uint, int) {
 	return selectedCity.Capacity, Id
 
 }
+
+func GetTicketsLeftInEveryCity(db *sql.DB) {
+
+	// Query to get all rows from the city table
+	rows, err := db.Query("SELECT cityName, capacity FROM city")
+	if err != nil {
+		log.Fatal("Error executing query:", err)
+	}
+	defer rows.Close()
+
+	var cityList []types.City
+
+	for rows.Next() {
+		var ct types.City
+		// Scan values from the row into the city struct
+		err := rows.Scan(&ct.Name, &ct.Capacity)
+		if err != nil {
+			log.Fatal("Error scanning row:", err)
+		}
+
+		cityList = append(cityList, ct)
+	}
+
+	for _, city := range cityList {
+		fmt.Printf("%v. %v\n", city.Name, city.Capacity)
+	}
+}
